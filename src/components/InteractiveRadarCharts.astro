@@ -1,0 +1,209 @@
+---
+---
+<div class="my-10 w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm p-4 sm:p-6">
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+    <h3 class="text-xl font-bold m-0 leading-none">Interactive Radar Maps (Category Performance)</h3>
+    <div class="relative">
+      <select id="radar-dataset-selector" class="appearance-none w-full pl-4 pr-10 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg text-sm cursor-pointer outline-none focus:ring-2 focus:ring-blue-500 font-medium text-zinc-800 dark:text-zinc-200">
+        <option value="bangla">Bangla QA Pairs</option>
+        <option value="english">English QA Pairs</option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-zinc-500 dark:text-zinc-400">
+        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  
+  <div class="flex flex-col xl:flex-row gap-6 w-full items-center justify-center">
+    <div class="flex-1 w-full flex flex-col items-center">
+      <div class="relative w-full h-[450px]"><canvas id="radarZeroShot"></canvas></div>
+      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(a) Zero-Shot Prompt</span>
+    </div>
+    <div class="flex-1 w-full flex flex-col items-center">
+      <div class="relative w-full h-[450px]"><canvas id="radarCoT"></canvas></div>
+      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(b) CoT Prompt</span>
+    </div>
+    <div class="flex-1 w-full flex flex-col items-center">
+      <div class="relative w-full h-[450px]"><canvas id="radarLoRA"></canvas></div>
+      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(c) LoRA Fine-Tuning</span>
+    </div>
+  </div>
+  <p class="text-xs text-center mt-6 text-zinc-500 dark:text-zinc-400 italic px-4">
+    *Toggle the model labels above each chart to isolate specific backbones across the Modality, Organ, Abnormality, Condition, and Positional axes.
+  </p>
+</div>
+
+<script is:inline>
+  const radarData = {
+    bangla: {
+      zeroShot: {
+        "Gemini 2.5 Flash": [(95.75+79.25)/2, (65.0+61.63)/2, (70.0+91.5)/2, (15.75+29.75)/2, (7.5+38.25)/2],
+        "GPT-4.1 Mini": [(85.25+79.63)/2, (29.75+47.38)/2, (47.5+8.5)/2, (11.0+23.75)/2, (15.0+38.25)/2],
+        "Claude Sonnet 4": [(98.25+69.25)/2, (36.37+45.0)/2, (60.0+84.12)/2, (12.0+16.75)/2, (8.75+22.25)/2],
+        "Llama-3.2V 11B": [(11.0+44.0)/2, (29.5+32.25)/2, (40.0+83.0)/2, (3.0+1.75)/2, (1.75+6.5)/2],
+        "Gemma-3 12B": [(97.5+89.88)/2, (50.25+57.75)/2, (30.0+83.75)/2, (8.0+14.75)/2, (12.75+20.75)/2],
+        "Qwen2.5-VL 7B": [(13.0+64.5)/2, (63.5+30.0)/2, (72.5+89.0)/2, (2.85+4.25)/2, (15.25+3.75)/2],
+        "LLaVA-1.5 7B": [(13.5+15.75)/2, (2.0+0.0)/2, (42.5+76.75)/2, (14.75+0.5)/2, (3.25+0.75)/2],
+        "Med-LLaVa 7B": [(6.75+42.25)/2, (6.75+15.38)/2, (39.75+76.38)/2, (8.0+6.38)/2, (2.25+13.25)/2],
+        "Med-Gemma 4B": [(6.0+36.13)/2, (50.0+16.25)/2, (0.0+67.13)/2, (0.5+0.0)/2, (3.0+19.5)/2]
+      },
+      cot: {
+        "Gemini 2.5 Flash": [(81.51+77.63)/2, (64.75+61.75)/2, (80.75+91.50)/2, (23.25+31.25)/2, (24.50+40.75)/2],
+        "GPT-4.1 Mini": [(80.38+73.25)/2, (39.00+48.75)/2, (27.75+12.25)/2, (13.00+14.25)/2, (19.50+30.00)/2],
+        "Claude Sonnet 4": [(98.00+79.25)/2, (43.12+47.50)/2, (57.50+88.75)/2, (9.75+20.00)/2, (9.75+22.50)/2],
+        "Llama-3.2V 11B": [(46.81+59.63)/2, (59.19+52.88)/2, (64.25+87.50)/2, (7.39+7.40)/2, (15.75+28.50)/2],
+        "Gemma-3 12B": [(94.19+91.63)/2, (55.13+57.75)/2, (62.00+89.00)/2, (14.50+21.00)/2, (17.50+22.25)/2],
+        "Qwen2.5-VL 7B": [(37.88+59.50)/2, (49.50+31.00)/2, (76.88+91.25)/2, (0.75+1.50)/2, (7.50+2.50)/2],
+        "LLaVA-1.5 7B": [(16.25+18.50)/2, (0.38+0.00)/2, (0.00+0.00)/2, (5.50+0.25)/2, (4.38+4.00)/2],
+        "Med-LLaVa 7B": [(25.38+40.25)/2, (22.44+21.88)/2, (52.13+84.25)/2, (11.38+8.50)/2, (5.35+6.70)/2],
+        "Med-Gemma 4B": [(25.38+45.00)/2, (57.69+34.88)/2, (47.00+74.00)/2, (0.63+0.00)/2, (12.13+19.25)/2]
+      },
+      lora: {
+        "Llama-3.2V 11B": [(97.50+92.62)/2, (82.00+91.75)/2, (77.50+91.50)/2, (42.62+19.25)/2, (53.87+18.75)/2],
+        "Gemma-3 12B": [(96.75+93.25)/2, (83.00+84.37)/2, (67.50+91.25)/2, (36.62+17.00)/2, (36.62+27.12)/2],
+        "Qwen2.5-VL 7B": [(96.00+97.50)/2, (83.75+84.37)/2, (75.00+91.37)/2, (34.37+18.50)/2, (59.62+31.25)/2],
+        "LLaVA-1.5 7B": [(96.25+86.00)/2, (82.62+84.37)/2, (60.00+91.50)/2, (33.50+11.00)/2, (50.87+18.25)/2],
+        "Med-LLaVa 7B": [(96.00+90.37)/2, (82.25+84.50)/2, (62.25+91.25)/2, (33.75+10.00)/2, (52.37+16.75)/2],
+        "Med-Gemma 4B": [(97.50+93.62)/2, (84.62+86.87)/2, (92.50+91.50)/2, (46.50+17.25)/2, (61.62+27.50)/2]
+      }
+    },
+    english: {
+      zeroShot: {
+        "Gemini 2.5 Flash": [(97+93.5)/2, (65.25+57.25)/2, (72.25+95.0)/2, (18.58+30.5)/2, (9.25+39.5)/2],
+        "GPT-4.1 Mini": [(97.5+89)/2, (60+50)/2, (75+60)/2, (21.75+21.5)/2, (19.25+36.08)/2],
+        "Claude Sonnet 4": [(97.5+91.5)/2, (63.25+51.25)/2, (70+92.5)/2, (13.32+24.5)/2, (15.75+27.25)/2],
+        "Llama-3.2V 11B": [(67.25+89.25)/2, (67.75+55.25)/2, (67.5+86.75)/2, (10+15)/2, (14+20)/2],
+        "Gemma-3 12B": [(76.25+91.75)/2, (66.25+55)/2, (47.5+90)/2, (11.5+25.75)/2, (14+25.5)/2],
+        "Qwen2.5-VL 7B": [(97+90.5)/2, (94.25+65)/2, (60+87.5)/2, (2.25+17.75)/2, (25.75+24.75)/2],
+        "LLaVA-1.5 7B": [(8.25+55)/2, (59.5+52.5)/2, (45+92.5)/2, (4.75+16.25)/2, (2+18.75)/2],
+        "Med-LLaVa 7B": [(3+45)/2, (88.25+35)/2, (40.25+89.25)/2, (8.75+3.25)/2, (23.5+26.25)/2],
+        "Med-Gemma 4B": [(1.5+45)/2, (23.25+32.5)/2, (45+92.5)/2, (0+0)/2, (15.25+30)/2]
+      },
+      cot: {
+        "Gemini 2.5 Flash": [(97.5+94.25)/2, (66.75+55.25)/2, (72.5+95.0)/2, (19.0+32.5)/2, (13.0+30.75)/2],
+        "GPT-4.1 Mini": [(97.0+90.75)/2, (56.0+50.5)/2, (55.0+92.5)/2, (9.75+30.25)/2, (16.5+27.58)/2],
+        "Claude Sonnet 4": [(97.75+93.0)/2, (62.0+51.0)/2, (57.5+95.5)/2, (12.25+24.0)/2, (13.75+25.5)/2],
+        "Llama-3.2V 11B": [(79.5+79.75)/2, (86.75+86.75)/2, (48.75+49.5)/2, (10.0+10.13)/2, (25.63+25.13)/2],
+        "Gemma-3 12B": [(97.0+90.25)/2, (62.5+47.5)/2, (57.5+92.5)/2, (8.25+28.0)/2, (7.5+19.25)/2],
+        "Qwen2.5-VL 7B": [(96.5+91.5)/2, (94.25+55.0)/2, (67.5+85.0)/2, (3.0+12.25)/2, (21.5+26.5)/2],
+        "LLaVA-1.5 7B": [(29.5+65.0)/2, (57.5+51.25)/2, (45.0+92.5)/2, (0.75+9.75)/2, (2.75+20.5)/2],
+        "Med-LLaVa 7B": [(1.75+37.5)/2, (89.25+35.0)/2, (40.75+87.0)/2, (0.25+8.25)/2, (26.0+28.5)/2],
+        "Med-Gemma 4B": [(1.0+45.0)/2, (18.38+32.5)/2, (45.0+92.5)/2, (0+0)/2, (15.25+25.75)/2]
+      },
+      lora: {
+        "Llama-3.2V 11B": [(96+100)/2, (97+92.5)/2, (89.75+85)/2, (50.87+32.23)/2, (79+42.07)/2],
+        "Gemma-3 12B": [(97.25+97.5)/2, (95.62+87.5)/2, (72.5+92.5)/2, (43.25+28.75)/2, (57.25+31.82)/2],
+        "Qwen2.5-VL 7B": [(96.75+100)/2, (94.37+90)/2, (75+92.5)/2, (38.37+22.75)/2, (66.25+43)/2],
+        "LLaVA-1.5 7B": [(96.5+85)/2, (95.5+82.5)/2, (72.5+92.5)/2, (35.62+12.5)/2, (74.5+33.25)/2],
+        "Med-LLaVa 7B": [(96.25+87.5)/2, (94.25+85)/2, (72.5+87.5)/2, (33.87+14.25)/2, (62.5+30.75)/2],
+        "Med-Gemma 4B": [(96.75+100)/2, (93.12+90)/2, (92.5+92.5)/2, (52.75+22.75)/2, (76.5+43)/2]
+      }
+    }
+  };
+
+  const modelColors = {
+    "Gemini 2.5 Flash": "rgba(56, 189, 248", // cyan-400
+    "GPT-4.1 Mini": "rgba(59, 130, 246", // blue-500
+    "Claude Sonnet 4": "rgba(250, 204, 21", // yellow-400
+    "Llama-3.2V 11B": "rgba(168, 85, 247", // purple-500
+    "Gemma-3 12B": "rgba(236, 72, 153", // pink-500
+    "Qwen2.5-VL 7B": "rgba(249, 115, 22", // orange-500
+    "LLaVA-1.5 7B": "rgba(161, 161, 170", // zinc-400
+    "Med-LLaVa 7B": "rgba(16, 185, 129", // emerald-500
+    "Med-Gemma 4B": "rgba(239, 68, 68" // red-500
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Shared chart styling config mapped directly from OS system toggles
+    const getThemeColors = () => {
+      const isDark = document.documentElement.classList.contains('dark') || document.documentElement.getAttribute('data-theme') === 'dark';
+      return {
+        textColor: isDark ? '#e4e4e7' : '#3f3f46',
+        gridColor: isDark ? '#3f3f46' : '#e4e4e7',
+        angleLines: isDark ? '#52525b' : '#d4d4d8',
+      };
+    };
+
+    const buildDatasets = (dataSubset) => {
+      return Object.keys(dataSubset).map((model, index) => {
+        const color = modelColors[model] || "rgba(100, 100, 100";
+        return {
+          label: model,
+          data: dataSubset[model],
+          backgroundColor: `${color}, 0.1)`,
+          borderColor: `${color}, 0.8)`,
+          borderWidth: 2,
+          pointBackgroundColor: `${color}, 1)`,
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: `${color}, 1)`,
+          hidden: false
+        };
+      });
+    };
+
+    const commonOptions = (colors) => ({
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: colors.textColor, font: { family: 'inherit', size: 10 }, usePointStyle: true }, position: 'top' },
+        tooltip: { bodyFont: { family: 'inherit' }, titleFont: { family: 'inherit' } }
+      },
+      scales: {
+        r: {
+          angleLines: { color: colors.angleLines },
+          grid: { color: colors.gridColor },
+          pointLabels: { color: colors.textColor, font: { family: 'inherit', size: 11 } },
+          ticks: { display: false, min: 0, max: 100, stepSize: 20 }
+        }
+      }
+    });
+
+    const categories = ['Modality', 'Organ', 'Abnormality', 'Condition', 'Position'];
+    let themeColors = getThemeColors();
+
+    const chartZeroShot = new Chart(document.getElementById('radarZeroShot'), {
+      type: 'radar',
+      data: { labels: categories, datasets: buildDatasets(radarData.bangla.zeroShot) },
+      options: commonOptions(themeColors)
+    });
+
+    const chartCoT = new Chart(document.getElementById('radarCoT'), {
+      type: 'radar',
+      data: { labels: categories, datasets: buildDatasets(radarData.bangla.cot) },
+      options: commonOptions(themeColors)
+    });
+
+    const chartLoRA = new Chart(document.getElementById('radarLoRA'), {
+      type: 'radar',
+      data: { labels: categories, datasets: buildDatasets(radarData.bangla.lora) },
+      options: commonOptions(themeColors)
+    });
+
+    const charts = [chartZeroShot, chartCoT, chartLoRA];
+
+    // Listen to Dataset generic dropdown toggler
+    document.getElementById('radar-dataset-selector').addEventListener('change', (e) => {
+      const db = e.target.value === 'bangla' ? radarData.bangla : radarData.english;
+      chartZeroShot.data.datasets = buildDatasets(db.zeroShot);
+      chartCoT.data.datasets = buildDatasets(db.cot);
+      chartLoRA.data.datasets = buildDatasets(db.lora);
+      charts.forEach(c => c.update());
+    });
+
+    // Dark Mode Observer Listener
+    const observer = new MutationObserver(() => {
+      themeColors = getThemeColors();
+      charts.forEach(chart => {
+        chart.options.plugins.legend.labels.color = themeColors.textColor;
+        chart.options.scales.r.pointLabels.color = themeColors.textColor;
+        chart.options.scales.r.grid.color = themeColors.gridColor;
+        chart.options.scales.r.angleLines.color = themeColors.angleLines;
+        chart.update();
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
+  });
+</script>

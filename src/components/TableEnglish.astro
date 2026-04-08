@@ -1,0 +1,75 @@
+---
+---
+<div class="full-bleed overflow-auto px-6 mb-12 mt-12">
+  <table class="mx-auto w-max text-sm text-center border-collapse">
+    <thead>
+      <tr class="border-b-2 border-zinc-400 dark:border-zinc-500">
+        <th rowspan="2" class="px-3 py-2 align-middle text-left font-bold">Models</th>
+        <th colspan="3" class="px-3 py-2 border-b border-zinc-200 dark:border-zinc-700 font-bold">Chest X-Ray</th>
+        <th colspan="3" class="px-3 py-2 border-b border-zinc-200 dark:border-zinc-700 font-bold">MedICaT</th>
+        <th colspan="3" class="px-3 py-2 border-b border-zinc-200 dark:border-zinc-700 font-bold">Overall (Avg.)</th>
+      </tr>
+      <tr class="border-b border-zinc-300 dark:border-zinc-600">
+        <th class="px-2 py-1">Acc</th><th class="px-2 py-1">BScore</th><th class="px-2 py-1">LAVE</th>
+        <th class="px-2 py-1">Acc</th><th class="px-2 py-1">BScore</th><th class="px-2 py-1">LAVE</th>
+        <th class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800">Acc</th><th class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800">BScore</th><th class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800">LAVE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Zero Shot -->
+      <tr class="border-t border-zinc-300">
+        <td colspan="10" class="py-2 italic font-semibold text-center">Zero Shot Prompt on English QA Pairs</td>
+      </tr>
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Closed Source VLMs</td></tr>
+      <tr><td class="text-left pl-6">Gemini 2.5 Flash</td><td>40.50</td><td>67.04</td><td>52.47</td><td>49.50</td><td class="text-cyan-600 font-medium">73.55</td><td class="text-cyan-600 font-medium">63.15</td><td class="bg-zinc-100 dark:bg-zinc-800">45.00</td><td class="bg-zinc-100 dark:bg-zinc-800">70.30</td><td class="bg-zinc-100 dark:bg-zinc-800">57.81</td></tr>
+      <tr><td class="text-left pl-6">GPT-4.1 Mini</td><td>41.00</td><td>67.23</td><td>54.70</td><td>33.00</td><td>63.77</td><td>51.31</td><td class="bg-zinc-100 dark:bg-zinc-800">37.00</td><td class="bg-zinc-100 dark:bg-zinc-800">65.50</td><td class="bg-zinc-100 dark:bg-zinc-800">53.01</td></tr>
+      <tr><td class="text-left pl-6">Claude Sonnet 4</td><td>41.00</td><td>66.56</td><td>51.97</td><td>47.00</td><td>70.48</td><td>57.40</td><td class="bg-zinc-100 dark:bg-zinc-800">44.00</td><td class="bg-zinc-100 dark:bg-zinc-800">68.52</td><td class="bg-zinc-100 dark:bg-zinc-800">54.69</td></tr>
+      
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source VLMs</td></tr>
+      <tr><td class="text-left pl-6">Llama-3.2V 11B</td><td>10.50</td><td>59.92</td><td>45.30</td><td>11.00</td><td>66.00</td><td>53.25</td><td class="bg-zinc-100 dark:bg-zinc-800">10.75</td><td class="bg-zinc-100 dark:bg-zinc-800">62.96</td><td class="bg-zinc-100 dark:bg-zinc-800">49.28</td></tr>
+      <tr><td class="text-left pl-6">Gemma-3 12B</td><td>19.50</td><td>56.05</td><td>43.30</td><td>46.50</td><td>67.14</td><td>57.60</td><td class="bg-zinc-100 dark:bg-zinc-800">33.00</td><td class="bg-zinc-100 dark:bg-zinc-800">61.60</td><td class="bg-zinc-100 dark:bg-zinc-800">50.45</td></tr>
+      <tr><td class="text-left pl-6">Qwen2.5-VL 7B</td><td class="text-cyan-600 font-medium">46.50</td><td class="text-cyan-600 font-medium">69.53</td><td class="text-cyan-600 font-medium">55.85</td><td class="text-cyan-600 font-medium">50.00</td><td>69.44</td><td>57.10</td><td class="bg-zinc-100 dark:bg-zinc-800">48.25</td><td class="bg-zinc-100 dark:bg-zinc-800">69.49</td><td class="bg-zinc-100 dark:bg-zinc-800">56.48</td></tr>
+      <tr><td class="text-left pl-6">LLaVA-1.5 7B</td><td>17.00</td><td>45.94</td><td>23.90</td><td>40.50</td><td>59.14</td><td>47.00</td><td class="bg-zinc-100 dark:bg-zinc-800">28.75</td><td class="bg-zinc-100 dark:bg-zinc-800">52.54</td><td class="bg-zinc-100 dark:bg-zinc-800">35.45</td></tr>
+      
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source Medical VLMs</td></tr>
+      <tr><td class="text-left pl-6">Med-LLaVa 7B</td><td>1.80</td><td>37.01</td><td>32.75</td><td>2.17</td><td>31.21</td><td>39.75</td><td class="bg-zinc-100 dark:bg-zinc-800">1.99</td><td class="bg-zinc-100 dark:bg-zinc-800">34.11</td><td class="bg-zinc-100 dark:bg-zinc-800">36.25</td></tr>
+      <tr><td class="text-left pl-6">Med-Gemma 4B</td><td>13.00</td><td>40.32</td><td>16.70</td><td>36.00</td><td>53.84</td><td>40.00</td><td class="bg-zinc-100 dark:bg-zinc-800">24.50</td><td class="bg-zinc-100 dark:bg-zinc-800">47.08</td><td class="bg-zinc-100 dark:bg-zinc-800">28.35</td></tr>
+      
+      <!-- CoT -->
+      <tr class="border-t border-zinc-300">
+        <td colspan="10" class="py-2 italic font-semibold text-center">CoT Prompt on English QA Pairs</td>
+      </tr>
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Closed Source VLMs</td></tr>
+      <tr><td class="text-left pl-6">Gemini 2.5 Flash</td><td>40.50</td><td>67.17</td><td>53.75</td><td class="text-cyan-600 font-medium">48.50</td><td class="text-cyan-600 font-medium">72.32</td><td class="text-cyan-600 font-medium">61.55</td><td class="bg-zinc-100 dark:bg-zinc-800">44.50</td><td class="bg-zinc-100 dark:bg-zinc-800">69.75</td><td class="bg-zinc-100 dark:bg-zinc-800">57.65</td></tr>
+      <tr><td class="text-left pl-6">GPT-4.1 Mini</td><td>33.50</td><td>62.83</td><td>46.85</td><td>46.00</td><td>68.88</td><td>58.31</td><td class="bg-zinc-100 dark:bg-zinc-800">39.75</td><td class="bg-zinc-100 dark:bg-zinc-800">65.86</td><td class="bg-zinc-100 dark:bg-zinc-800">52.58</td></tr>
+      <tr><td class="text-left pl-6">Claude Sonnet 4</td><td>38.50</td><td>65.25</td><td>48.65</td><td>47.50</td><td>70.67</td><td>57.70</td><td class="bg-zinc-100 dark:bg-zinc-800">43.00</td><td class="bg-zinc-100 dark:bg-zinc-800">67.96</td><td class="bg-zinc-100 dark:bg-zinc-800">53.18</td></tr>
+      
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source VLMs</td></tr>
+      <tr><td class="text-left pl-6">Llama-3.2V 11B</td><td>29.00</td><td>59.21</td><td>50.12</td><td>45.50</td><td>67.68</td><td>50.25</td><td class="bg-zinc-100 dark:bg-zinc-800">37.25</td><td class="bg-zinc-100 dark:bg-zinc-800">63.45</td><td class="bg-zinc-100 dark:bg-zinc-800">50.19</td></tr>
+      <tr><td class="text-left pl-6">Gemma-3 12B</td><td>38.00</td><td>66.43</td><td>46.55</td><td>45.00</td><td>67.31</td><td>55.50</td><td class="bg-zinc-100 dark:bg-zinc-800">41.50</td><td class="bg-zinc-100 dark:bg-zinc-800">66.87</td><td class="bg-zinc-100 dark:bg-zinc-800">51.03</td></tr>
+      <tr><td class="text-left pl-6">Qwen2.5-VL 7B</td><td class="text-cyan-600 font-medium">48.00</td><td class="text-cyan-600 font-medium">69.52</td><td class="text-cyan-600 font-medium">56.55</td><td>46.00</td><td>67.82</td><td>54.50</td><td class="bg-zinc-100 dark:bg-zinc-800">47.00</td><td class="bg-zinc-100 dark:bg-zinc-800">68.67</td><td class="bg-zinc-100 dark:bg-zinc-800">55.53</td></tr>
+      <tr><td class="text-left pl-6">LLaVA-1.5-7B</td><td>20.50</td><td>47.53</td><td>27.10</td><td>42.00</td><td>60.61</td><td>47.80</td><td class="bg-zinc-100 dark:bg-zinc-800">31.25</td><td class="bg-zinc-100 dark:bg-zinc-800">54.07</td><td class="bg-zinc-100 dark:bg-zinc-800">37.45</td></tr>
+      
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source Medical VLMs</td></tr>
+      <tr><td class="text-left pl-6">Med-LLaVa 7B</td><td>2.10</td><td>37.56</td><td>31.25</td><td>2.35</td><td>13.89</td><td>39.25</td><td class="bg-zinc-100 dark:bg-zinc-800">2.23</td><td class="bg-zinc-100 dark:bg-zinc-800">25.73</td><td class="bg-zinc-100 dark:bg-zinc-800">35.25</td></tr>
+      <tr><td class="text-left pl-6">Med-Gemma 4B</td><td>11.50</td><td>41.30</td><td>15.93</td><td>35.50</td><td>53.59</td><td>39.15</td><td class="bg-zinc-100 dark:bg-zinc-800">23.50</td><td class="bg-zinc-100 dark:bg-zinc-800">47.45</td><td class="bg-zinc-100 dark:bg-zinc-800">27.54</td></tr>
+      
+      <!-- LoRA -->
+      <tr class="border-t border-zinc-300">
+        <td colspan="10" class="py-2 italic font-semibold text-center">LoRA Fine-Tuning on English QA Pairs</td>
+      </tr>
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source VLMs</td></tr>
+      <tr><td class="text-left pl-6">Llama-3.2V 11B</td><td class="text-blue-600 font-bold">68.00</td><td class="text-blue-600 font-bold">88.50</td><td class="text-blue-600 font-bold">82.53</td><td>64.00</td><td class="text-blue-600 font-bold">78.42</td><td class="text-blue-600 font-bold">70.37</td><td class="bg-zinc-100 dark:bg-zinc-800">66.00</td><td class="bg-zinc-100 font-bold dark:bg-zinc-800">83.46</td><td class="bg-zinc-100 font-bold dark:bg-zinc-800">76.45</td></tr>
+      <tr><td class="text-left pl-6">Gemma-3 12B</td><td>60.00</td><td>85.40</td><td>73.18</td><td class="text-blue-600 font-bold">65.00</td><td>76.59</td><td>67.61</td><td class="bg-zinc-100 dark:bg-zinc-800">62.50</td><td class="bg-zinc-100 dark:bg-zinc-800">80.99</td><td class="bg-zinc-100 dark:bg-zinc-800">70.40</td></tr>
+      <tr><td class="text-left pl-6">Qwen2.5-VL 7B</td><td>62.50</td><td>85.13</td><td>74.15</td><td class="text-blue-600 font-bold">65.00</td><td>76.21</td><td>68.45</td><td class="bg-zinc-100 dark:bg-zinc-800">63.75</td><td class="bg-zinc-100 dark:bg-zinc-800">80.67</td><td class="bg-zinc-100 dark:bg-zinc-800">71.30</td></tr>
+      <tr><td class="text-left pl-6">LLaVA-1.5-7B</td><td>63.50</td><td>84.67</td><td>74.93</td><td>59.50</td><td>70.47</td><td>61.15</td><td class="bg-zinc-100 dark:bg-zinc-800">61.50</td><td class="bg-zinc-100 dark:bg-zinc-800">77.57</td><td class="bg-zinc-100 dark:bg-zinc-800">68.04</td></tr>
+      
+      <tr><td colspan="10" class="text-left py-1 italic pl-4 text-xs text-zinc-500">Open Source Medical VLMs</td></tr>
+      <tr><td class="text-left pl-6">Med-LLaVa 7B</td><td>62.00</td><td>84.22</td><td>71.88</td><td>60.00</td><td>70.83</td><td>61.00</td><td class="bg-zinc-100 dark:bg-zinc-800">61.00</td><td class="bg-zinc-100 dark:bg-zinc-800">77.53</td><td class="bg-zinc-100 dark:bg-zinc-800">66.44</td></tr>
+      <tr><td class="text-left pl-6">Med-Gemma 4B</td><td class="text-blue-600 font-bold">68.00</td><td>88.21</td><td>82.32</td><td class="text-blue-600 font-bold">65.00</td><td>76.21</td><td>69.65</td><td class="bg-zinc-100 font-bold dark:bg-zinc-800">66.50</td><td class="bg-zinc-100 dark:bg-zinc-800">82.21</td><td class="bg-zinc-100 dark:bg-zinc-800">75.99</td></tr>
+    </tbody>
+  </table>
+  <div class="mt-4 text-sm text-center px-4 max-w-4xl mx-auto italic text-zinc-600 dark:text-zinc-400">
+    Table 2: Model Benchmarking for <strong>English</strong> with average scores across ChestX-Ray and MedICaT datasets. <span class="text-blue-600 font-bold">Blue</span> highlights the highest-performing model in the Benchmark, while <span class="text-cyan-600 font-medium">Cyan</span> marks the best-performing models for each metric across the model types.
+  </div>
+</div>

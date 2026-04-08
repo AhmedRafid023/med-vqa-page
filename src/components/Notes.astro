@@ -1,0 +1,33 @@
+---
+import type { Note } from "../types/types";
+
+interface Props {
+  notes: Note[];
+}
+
+const { notes } = Astro.props;
+
+const institutions = notes.filter(n => n.symbol.match(/[0-9]/));
+const contributions = notes.filter(n => !n.symbol.match(/[0-9]/));
+---
+
+<div class="text-center text-sm flex flex-col gap-1 items-center">
+  {institutions.length > 0 && (
+    <div>
+      {institutions.map((note, index, array) => (
+        <span>
+          <sup>{note.symbol}</sup>{note.text}{index < array.length - 1 ? ", " : ""}
+        </span>
+      ))}
+    </div>
+  )}
+  {contributions.length > 0 && (
+    <div>
+      {contributions.map((note, index, array) => (
+        <span>
+          <sup>{note.symbol}</sup>{note.text}{index < array.length - 1 ? ", " : ""}
+        </span>
+      ))}
+    </div>
+  )}
+</div>

@@ -1,0 +1,118 @@
+---
+import { Font } from "astro:assets";
+
+import Links from "../components/Links.astro";
+import Authors from "../components/Authors.astro";
+import Notes from "../components/Notes.astro";
+import type { Author, Note, Link } from "../types/types";
+
+import Table from "../components/Table.astro";
+
+import "../styles/global.css";
+import "katex/dist/katex-swap.css";
+
+import { Content, frontmatter } from "../paper.mdx";
+
+interface Frontmatter {
+  title: string;
+  authors: Author[];
+  conference?: string;
+  notes?: Note[];
+  links?: Link[];
+  description?: string;
+  favicon: string;
+  thumbnail?: string;
+  theme?: "device" | "light" | "dark";
+}
+
+const {
+  title,
+  authors,
+  conference,
+  notes,
+  links,
+  description,
+  favicon,
+  thumbnail,
+  theme = "light",
+} = frontmatter as Frontmatter;
+
+const baseUrl = import.meta.env.BASE_URL;
+const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+---
+
+<!doctype html>
+<html class="bg-white dark:bg-zinc-900" lang="en" data-theme={theme}>
+  <head>
+    <meta charset="UTF-8" />
+    {description && <meta name="description" content={description} />}
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" type="image/svg+xml" href={prefix + favicon} />
+
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+    {thumbnail && <meta property="og:image" content={prefix + thumbnail} />}
+
+    <Font
+      cssVariable="--font-noto-sans"
+      preload={[{ subset: "latin", style: "normal" }]}
+    />
+
+    <title>{title}</title>
+    <script is:inline>
+      if (localStorage.getItem('color-theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.setAttribute('data-theme', 'light');
+        if (!localStorage.getItem('color-theme')) localStorage.setItem('color-theme', 'light');
+      }
+    </script>
+  </head>
+  <body
+    class="prose prose-lg prose-zinc dark:prose-invert prose-a:text-blue-500 prose-a:dark:text-blue-300 prose-a:no-underline prose-a:hover:underline prose-a:font-normal prose-code:bg-zinc-200 prose-code:dark:bg-zinc-800 prose-code:text-zinc-800 prose-code:dark:text-zinc-200 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-medium prose-code:before:content-none prose-code:after:content-none max-w-none pt-16 pb-6 font-(family-name:--font-noto-sans)"
+  >
+    <button
+      id="theme-toggle"
+      class="fixed top-4 right-4 p-2 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 shadow-sm z-50 transition-transform active:scale-95"
+      aria-label="Toggle theme"
+    >
+      <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 dark:block" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+      <svg id="theme-toggle-light-icon" class="block w-5 h-5 dark:hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    </button>
+    <script is:inline>
+      document.getElementById('theme-toggle').addEventListener('click', function() {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('color-theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('color-theme', 'dark');
+        }
+      });
+    </script>
+    <header class="mx-auto mb-12 max-w-[65rem] px-6 text-center">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-tight" set:html={title} />
+      <div class="flex flex-col items-center gap-6 mt-4">
+        <Authors authors={authors} />
+        {conference && <div>{conference}</div>}
+        {notes && <Notes notes={notes} />}
+        {links && <Links links={links} />}
+      </div>
+    </header>
+    <main>
+      <Content components={{ table: Table }} />
+    </main>
+    <footer class="mx-auto max-w-[50rem] px-6 text-center">
+      <p class="prose-sm text-center">
+        &copy; Copyright 2026 Rafid Ahmed.
+      </p>
+    </footer>
+  </body>
+</html>

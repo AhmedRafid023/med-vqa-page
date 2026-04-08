@@ -1,0 +1,128 @@
+---
+title: "Evaluating Large Vision Language Models on<br/>Bangla Medical Visual Question Answering"
+authors:
+  - name: Rafid Ahmed
+    notes: ["1", "*"]
+  - name: Intesar Tahmid
+    notes: ["1", "*"]
+  - name: Mir Sazzat Hossain
+    notes: ["1", "2", "*"]
+  - name: Tasnimul Hossain Tomal
+    notes: ["1"]
+  - name: Md Mahir Jawad
+    notes: ["1"]
+  - name: Anam Borhan Uddin
+    notes: ["1"]
+  - name: Md Fahim
+    notes: ["1", "2", "†"]
+  - name: Md Farhad Alam Bhuiyan
+    notes: ["1"]
+conference: ACL 2026
+notes:
+  - symbol: "1"
+    text: Penta Global Limited, Bangladesh
+  - symbol: "2"
+    text: Center for Computational & Data Sciences
+  - symbol: "*"
+    text: Equal Contribution
+  - symbol: †
+    text: Project Lead
+links:
+  - name: Paper
+    url: https://drive.google.com/file/d/1SUm9jwgp2cxegX2v9om03jqw3jm1dy3i/view?usp=drive_link
+    icon: ri:file-pdf-2-line
+  - name: Code
+    url: https://github.com/AhmedRafid023/med-vqa-LoRA.git
+    icon: ri:github-line
+  - name: Dataset
+    url: https://huggingface.co/datasets/iiCEMAN/BanglaMedVQA
+    icon: ri:database-2-line
+
+theme: device
+
+favicon: favicon.svg
+description: BanglaMedVQA Project Page
+---
+
+import HighlightedSection from "./components/HighlightedSection.astro";
+import Figure from "./components/Figure.astro";
+import Picture from "./components/Picture.astro";
+import TwoColumns from "./components/TwoColumns.astro";
+import Wide from "./components/Wide.astro";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/starwind/tabs";
+import TableBangla from "./components/TableBangla.astro";
+import TableEnglish from "./components/TableEnglish.astro";
+import InteractiveChart from "./components/InteractiveChart.astro";
+import InteractiveRadarCharts from "./components/InteractiveRadarCharts.astro";
+
+<Wide>
+  <Picture src="../../public/images/acl-figure.pdf" alt="Workflow of the dataset curation process" />
+</Wide>
+
+To address the shortage of linguistic diversity in modern medical evaluations, we developed **BanglaMedVQA**: a new, expertly curated Visual Question Answering dataset tailored specifically to the Bangla language domain. The benchmark framework includes precisely 7,000 unique image–question clinical pairs sourced across versatile medical distributions (such as CT scans and X-Rays) testing the LVLMs across modality, organ detection, pathological abnormality, condition evaluation, and positional queries.
+
+
+<HighlightedSection>
+
+## Abstract
+
+Recent advancements in Large Language Models (LLMs) and Large Vision Language Models (LVLMs) have enabled general-purpose systems to demonstrate promising capabilities in complex reasoning tasks, including those in the medical domain. However, their evaluation has predominantly focused on high-resource languages, leaving low-resource contexts like Bangla underexplored. To address this gap, we introduce BanglaMedVQA, a multilingual Medical Visual Question Answering (VQA) dataset comprising clinically validated image–question–answer pairs, along with a comprehensive evaluation of current LVLMs on this resource. We rigorously evaluate nine state-of-the-art LVLMs using zero-shot, Chain-of-Thought (CoT), and LoRA fine-tuning strategies. Our results reveal a clear performance disparity: models perform well on generalized visual tasks but struggle with fine-grained diagnostic reasoning, achieving surprisingly low accuracy in specialized categories. While fine-tuning significantly improves overall accuracy, especially for Qwen2.5-VL, limitations in specialized medical reasoning persist. Our work provides a foundation for future research in Bangla medical VQA.
+
+</HighlightedSection>
+
+## Dataset Distribution
+
+<TwoColumns>
+  <Figure slot="left">
+    <Picture slot="figure" src="../../public/images/organwise_sunburst_attractive.pdf" alt="Organ-wise Data Distribution" />
+    <Fragment slot="caption">Organ-wise breakdown of our Bangla medical dataset.</Fragment>
+  </Figure>
+  <Figure slot="right">
+    <Picture slot="figure" src="../../public/images/keyword_full.pdf" alt="Keyword Distribution" />
+    <Fragment slot="caption">Distribution of dataset keywords.</Fragment>
+  </Figure>
+</TwoColumns>
+
+## Quantitative Benchmarking Results
+
+Our experiments demonstrate clear performance metrics: contemporary Language-Vision models like Gemini 2.5 Flash and Claude Sonnet 4 yield reasonably accurate answers against general imaging contexts across English datasets, but they exhibit shockingly low accuracy when confronting expert queries translating to Bengali. In contrast, leveraging advanced Low-Rank Adaptation (LoRA) Fine-Tuning dramatically closes this linguistic translation gap on open-source medical backbones such as Qwen2.5-VL and MedGemma-4B, lifting the highest LAVE categorical evaluation average up to nearly ~76% accuracy overall.
+
+<TableBangla />
+<TableEnglish />
+
+<InteractiveChart />
+
+
+## Fine-Grained Performance Analysis
+
+<Wide>
+  <InteractiveRadarCharts />
+</Wide>
+
+## Error Analysis
+
+<Figure>
+  <Picture slot="figure" src="../../public/images/acl-error-analysis.pdf" alt="Error Analysis" />
+  <Fragment slot="caption">Qualitative error analysis of LVLM responses.</Fragment>
+</Figure>
+
+## BibTeX citation
+
+```bibtex
+@inproceedings{ahmed-etal-2026-banglamedvqa,
+    title = "Evaluating Large Vision Language Models on Bangla Medical Visual Question Answering",
+    author = "Ahmed, Rafid  and
+      Tahmid, Intesar  and
+      Hossain, Mir Sazzat  and
+      Tomal, Tasnimul Hossain  and
+      Jawad, Md Mahir  and
+      Uddin, Anam Borhan  and
+      Fahim, Md  and
+      Bhuiyan, Md Farhad Alam",
+    booktitle = "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+    month = "aug",
+    year = "2026",
+    address = "San Diego, California, USA",
+    publisher = "Association for Computational Linguistics"
+}
+```
