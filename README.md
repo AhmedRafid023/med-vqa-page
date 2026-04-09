@@ -6,7 +6,7 @@ Official project page for the ACL 2026 paper:
 > Rafid Ahmed, Intesar Tahmid, Mir Sazzat Hossain, Tasnimul Hossain Tomal, Md Mahir Jawad, Anam Borhan Uddin, Md Fahim, Md Farhad Alam Bhuiyan  
 > *Association for Computational Linguistics (ACL 2026)*
 
-🔗 **Live Site**: [AhmedRafid023.github.io/med-vqa-project-page](https://AhmedRafid023.github.io/med-vqa-project-page)  
+🔗 **Live Site**: [AhmedRafid023.github.io/med-vqa-page](https://AhmedRafid023.github.io/med-vqa-page)  
 📄 **Paper**: [Google Drive](https://drive.google.com/file/d/1SUm9jwgp2cxegX2v9om03jqw3jm1dy3i/view?usp=drive_link)  
 💻 **Code**: [med-vqa-LoRA](https://github.com/AhmedRafid023/med-vqa-LoRA)  
 🗄️ **Dataset**: [BanglaMedVQA on HuggingFace](https://huggingface.co/datasets/iiCEMAN/BanglaMedVQA)
