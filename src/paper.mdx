@@ -56,10 +56,11 @@ import InteractiveChart from "./components/InteractiveChart.astro";
 import InteractiveRadarCharts from "./components/InteractiveRadarCharts.astro";
 
 <Wide>
-  <Picture src="../../public/images/acl-figure.pdf" alt="Workflow of the dataset curation process" />
+  <Figure>
+    <Picture slot="figure" src="../../public/images/acl-figure.pdf" alt="Workflow of the dataset curation process" />
+    <Fragment slot="caption">Workflow of the dataset curation process. Images and metadata were obtained from two widely used biomedical datasets, enabling the automatic generation of QA pairs, which were subsequently verified by domain experts.</Fragment>
+  </Figure>
 </Wide>
-
-To address the shortage of linguistic diversity in modern medical evaluations, we developed **BanglaMedVQA**: a new, expertly curated Visual Question Answering dataset tailored specifically to the Bangla language domain. The benchmark framework includes precisely 7,000 unique image–question clinical pairs sourced across versatile medical distributions (such as CT scans and X-Rays) testing the LVLMs across modality, organ detection, pathological abnormality, condition evaluation, and positional queries.
 
 
 <HighlightedSection>
@@ -85,7 +86,7 @@ Recent advancements in Large Language Models (LLMs) and Large Vision Language Mo
 
 ## Quantitative Benchmarking Results
 
-Our experiments demonstrate clear performance metrics: contemporary Language-Vision models like Gemini 2.5 Flash and Claude Sonnet 4 yield reasonably accurate answers against general imaging contexts across English datasets, but they exhibit shockingly low accuracy when confronting expert queries translating to Bengali. In contrast, leveraging advanced Low-Rank Adaptation (LoRA) Fine-Tuning dramatically closes this linguistic translation gap on open-source medical backbones such as Qwen2.5-VL and MedGemma-4B, lifting the highest LAVE categorical evaluation average up to nearly ~76% accuracy overall.
+Our experiments demonstrate clear performance metrics: contemporary Language-Vision models like Gemini 2.5 Flash and Claude Sonnet 4 yield reasonably accurate answers against general imaging contexts across English datasets, but they exhibit surprisingly low accuracy when confronting expert queries translating to Bengali. In contrast, leveraging advanced Low-Rank Adaptation (LoRA) Fine-Tuning dramatically closes this linguistic translation gap on open-source medical backbones such as Qwen2.5-VL and MedGemma-4B, lifting the highest LAVE categorical evaluation average up to nearly ~76% accuracy overall.
 
 <TableBangla />
 <TableEnglish />
