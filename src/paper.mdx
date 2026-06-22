@@ -1,5 +1,6 @@
 ---
-title: "Evaluating Large Vision Language Models on<br/>Bangla Medical Visual Question Answering"
+title: "Evaluating Large Vision Language Models on Bangla Medical Visual Question Answering"
+tagline: "A clinically validated benchmark for Bangla Medical VQA — and what nine state-of-the-art LVLMs get wrong."
 authors:
   - name: Rafid Ahmed
     notes: ["1", "*"]
@@ -18,6 +19,7 @@ authors:
   - name: Md Farhad Alam Bhuiyan
     notes: ["1"]
 conference: ACL 2026
+conferenceUrl: https://2026.aclweb.org/
 notes:
   - symbol: "1"
     text: Penta Global Limited, Bangladesh
@@ -54,6 +56,7 @@ import TableBangla from "./components/TableBangla.astro";
 import TableEnglish from "./components/TableEnglish.astro";
 import InteractiveChart from "./components/InteractiveChart.astro";
 import InteractiveRadarCharts from "./components/InteractiveRadarCharts.astro";
+import { Icon } from "astro-icon/components";
 
 <Wide>
   <Figure>
@@ -67,11 +70,122 @@ import InteractiveRadarCharts from "./components/InteractiveRadarCharts.astro";
 
 ## Abstract
 
-Recent advancements in Large Language Models (LLMs) and Large Vision Language Models (LVLMs) have enabled general-purpose systems to demonstrate promising capabilities in complex reasoning tasks, including those in the medical domain. However, their evaluation has predominantly focused on high-resource languages, leaving low-resource contexts like Bangla underexplored. To address this gap, we introduce BanglaMedVQA, a multilingual Medical Visual Question Answering (VQA) dataset comprising clinically validated image–question–answer pairs, along with a comprehensive evaluation of current LVLMs on this resource. We rigorously evaluate nine state-of-the-art LVLMs using zero-shot, Chain-of-Thought (CoT), and LoRA fine-tuning strategies. Our results reveal a clear performance disparity: models perform well on generalized visual tasks but struggle with fine-grained diagnostic reasoning, achieving surprisingly low accuracy in specialized categories. While fine-tuning significantly improves overall accuracy, especially for Qwen2.5-VL, limitations in specialized medical reasoning persist. Our work provides a foundation for future research in Bangla medical VQA.
+Recent advancements in Large Language Models (LLMs) and Large Vision Language Models (LVLMs) have enabled general-purpose systems to demonstrate promising capabilities in complex reasoning tasks, including those in the medical domain. However, their evaluation has predominantly focused on high-resource languages, leaving low-resource contexts like Bangla underexplored. To address this gap, we introduce **BanglaMedVQA**, a multilingual Medical Visual Question Answering (VQA) dataset comprising clinically validated image–question–answer pairs, along with a comprehensive evaluation of current LVLMs on this resource. We rigorously evaluate nine state-of-the-art LVLMs using zero-shot, Chain-of-Thought (CoT), and LoRA fine-tuning strategies. Our results reveal a clear performance disparity: models perform well on generalized visual tasks but struggle with fine-grained diagnostic reasoning, achieving surprisingly low accuracy in specialized categories. While fine-tuning significantly improves overall accuracy, especially for Qwen2.5-VL, limitations in specialized medical reasoning persist. Our work provides a foundation for future research in Bangla medical VQA.
 
 </HighlightedSection>
 
-## Dataset Distribution
+<div class="not-prose my-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 text-center dark:border-zinc-700 dark:bg-zinc-700 md:grid-cols-4">
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">9</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">LVLMs evaluated</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">3</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Evaluation strategies</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">~76%</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Best LoRA accuracy</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">2</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Languages (Bn / En)</div>
+  </div>
+</div>
+
+## Key Contributions
+
+<div class="not-prose my-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+      <Icon name="ri:database-2-line" class="text-2xl" />
+    </div>
+    <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">BanglaMedVQA Dataset</h3>
+    <p class="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">The first clinically validated Bangla Medical VQA dataset, featuring multilingual image–question–answer pairs spanning diverse medical specialties and organ systems.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+      <Icon name="ri:bar-chart-box-line" class="text-2xl" />
+    </div>
+    <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Comprehensive Benchmarking</h3>
+    <p class="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">Systematic evaluation of 9 state-of-the-art LVLMs — including Gemini 2.5 Flash, Claude Sonnet 4, Qwen2.5-VL, and MedGemma-4B — across zero-shot, Chain-of-Thought, and LoRA fine-tuning paradigms.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+      <Icon name="ri:translate-2" class="text-2xl" />
+    </div>
+    <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Language Performance Gap</h3>
+    <p class="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">Clear evidence that current LVLMs excel on general English visual tasks but significantly underperform on fine-grained Bangla diagnostic reasoning, highlighting the challenges of low-resource medical AI.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900">
+    <div class="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+      <Icon name="ri:line-chart-line" class="text-2xl" />
+    </div>
+    <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Fine-Tuning Effectiveness</h3>
+    <p class="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">LoRA fine-tuning on Qwen2.5-VL achieves up to ~76% overall accuracy, demonstrating the potential of domain-adaptive training for bridging the performance gap in low-resource settings.</p>
+  </div>
+</div>
+
+## The BanglaMedVQA Dataset
+
+BanglaMedVQA is built on two widely used biomedical sources — **ChestX-ray8** and **MedICaT** — pairing structured chest-radiograph metadata with a broader range of imaging modalities and anatomical regions. For every image, English QA pairs are generated from its metadata using `gemini-2.5-flash` with few-shot prompting, then translated into Bangla with the same model. The result is **7,000 clinically grounded image–question–answer pairs**, balanced across healthy and abnormal cases and split evenly across five question categories.
+
+<div class="not-prose my-8 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+  <p class="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Generalized categories — relatively straightforward</p>
+  <div class="flex flex-wrap gap-2">
+    <span class="rounded-full bg-zinc-100 px-4 py-1.5 text-sm font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">Modality</span>
+    <span class="rounded-full bg-zinc-100 px-4 py-1.5 text-sm font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">Organ</span>
+    <span class="rounded-full bg-zinc-100 px-4 py-1.5 text-sm font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200">Abnormality</span>
+  </div>
+  <p class="mb-3 mt-6 text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">Specialized categories — require deeper medical reasoning</p>
+  <div class="flex flex-wrap gap-2">
+    <span class="rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">Condition</span>
+    <span class="rounded-full bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700 dark:bg-blue-950/50 dark:text-blue-300">Position</span>
+  </div>
+</div>
+
+### A three-stage curation pipeline
+
+<div class="not-prose my-8 grid gap-4 sm:grid-cols-3">
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">Step 01</span>
+    <h4 class="mb-2 mt-1 text-base font-semibold text-zinc-900 dark:text-zinc-100">Curate &amp; structure</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Images and metadata are drawn from ChestX-ray8 and MedICaT. A positional-reasoning module turns bounding boxes into descriptive text, and Gemini extracts findings from captions.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">Step 02</span>
+    <h4 class="mb-2 mt-1 text-base font-semibold text-zinc-900 dark:text-zinc-100">Generate &amp; translate</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">A few-shot pipeline produces English QA pairs across all five categories, which are then translated into Bangla — preserving both clinical integrity and linguistic coherence.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <span class="text-sm font-bold text-blue-600 dark:text-blue-400">Step 03</span>
+    <h4 class="mb-2 mt-1 text-base font-semibold text-zinc-900 dark:text-zinc-100">Expert verification</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Two medical specialists independently reviewed a 1,000-sample subset for clinical correctness, translation quality, and anatomical-position accuracy.</p>
+  </div>
+</div>
+
+A blind validation study by two compensated medical specialists confirmed the pipeline's reliability: generated QA pairs reached a **97% acceptance rate** with strong inter-rater agreement (**Cohen's κ = 0.89**), covering both translation quality and anatomical-position correctness.
+
+<div class="not-prose my-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 text-center dark:border-zinc-700 dark:bg-zinc-700 md:grid-cols-4">
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">7,000</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">VQA pairs</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">5</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Question categories</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">97%</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Expert acceptance</div>
+  </div>
+  <div class="bg-white px-4 py-7 dark:bg-zinc-900">
+    <div class="text-3xl font-bold tracking-tight text-blue-600 dark:text-blue-400 md:text-4xl">0.89</div>
+    <div class="mt-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400">Cohen's κ agreement</div>
+  </div>
+</div>
+
+### Dataset distribution
 
 <TwoColumns>
   <Figure slot="left">
@@ -84,14 +198,64 @@ Recent advancements in Large Language Models (LLMs) and Large Vision Language Mo
   </Figure>
 </TwoColumns>
 
+## Evaluation Setup
+
+We benchmark **nine LVLMs** — closed-source (Gemini 2.5 Flash, GPT-4.1 Mini, Claude Sonnet 4), open-source general-purpose (LLaMA-3.2V, Gemma-3, Qwen2.5-VL, LLaVA-1.5), and medical-domain (Med-LLaVA, Med-Gemma) — under three strategies. Open-source models are additionally LoRA fine-tuned (rank 16, α 32, 2 epochs) on a single NVIDIA A100. Every answer is scored with three complementary metrics.
+
+<div class="not-prose my-8 grid gap-4 sm:grid-cols-3">
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">Accuracy (Acc)</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Proportion of exact matches between predicted and ground-truth answers.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">BERTScore (BScore)</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Semantic similarity between prediction and reference using contextual embeddings.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">LAVE</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">LLM-assisted VQA evaluation, using GPT-4.1-mini as an automatic judge for more reliable scoring.</p>
+  </div>
+</div>
+
 ## Quantitative Benchmarking Results
 
-Our experiments demonstrate clear performance metrics: contemporary Language-Vision models like Gemini 2.5 Flash and Claude Sonnet 4 yield reasonably accurate answers against general imaging contexts across English datasets, but they exhibit surprisingly low accuracy when confronting expert queries translating to Bengali. In contrast, leveraging advanced Low-Rank Adaptation (LoRA) Fine-Tuning dramatically closes this linguistic translation gap on open-source medical backbones such as Qwen2.5-VL and MedGemma-4B, lifting the highest LAVE categorical evaluation average up to nearly ~76% accuracy overall.
+Contemporary vision-language models like Gemini 2.5 Flash and Claude Sonnet 4 answer general imaging questions reasonably well in English, but accuracy drops sharply once the same questions are posed in Bangla. LoRA fine-tuning dramatically closes this gap on open-source backbones such as Qwen2.5-VL and Med-Gemma 4B, lifting the best overall LAVE average to nearly **~76%**. Use the tabs below to switch between the Bangla and English benchmarks.
 
-<TableBangla />
-<TableEnglish />
+<Tabs defaultValue="bangla" class="my-8">
+  <TabsList class="mx-auto w-fit rounded-full border border-zinc-200 bg-zinc-100 p-1 dark:border-zinc-700 dark:bg-zinc-800">
+    <TabsTrigger value="bangla">Bangla QA Pairs</TabsTrigger>
+    <TabsTrigger value="english">English QA Pairs</TabsTrigger>
+  </TabsList>
+  <TabsContent value="bangla">
+    <TableBangla />
+  </TabsContent>
+  <TabsContent value="english">
+    <TableEnglish />
+  </TabsContent>
+</Tabs>
 
 <InteractiveChart />
+
+### Key findings
+
+<div class="not-prose my-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">Closed-source leads in Bangla</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Under zero-shot prompting, Gemini 2.5 Flash (55.4% LAVE) and Claude Sonnet 4 (45.3%) clearly outperform open-source and medical-domain models, which often fall below 10% accuracy in Bangla.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">Chain-of-Thought helps</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">CoT prompting consistently improves reasoning — e.g. LLaMA-3.2V jumps from 17.5% to 30.2% LAVE in Bangla — with the largest gains for open-source models.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">Fine-tuning surpasses proprietary models</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">After LoRA fine-tuning, open-source Med-Gemma 4B and Qwen2.5-VL overtake closed-source baselines, reaching ~70% overall LAVE in Bangla and ~76% in English.</p>
+  </div>
+  <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <h4 class="mb-2 text-base font-semibold text-zinc-900 dark:text-zinc-100">Specialized reasoning stays hard</h4>
+    <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">Even the best fine-tuned model reaches only ~18–45% on the Condition and Position categories — the fine-grained diagnostic gap is far from solved.</p>
+  </div>
+</div>
 
 
 ## Fine-Grained Performance Analysis
@@ -102,10 +266,18 @@ Our experiments demonstrate clear performance metrics: contemporary Language-Vis
 
 ## Error Analysis
 
+Models generally handle straightforward questions — identifying the imaging modality or the organ involved — but struggle with specialized diagnostic reasoning. Errors are most frequent on questions requiring precise **localization** or interpretation of pathological findings, where models confuse nearby anatomical regions or misclassify related conditions such as cysts and edema. Many responses are only *partially* correct: they capture a general abnormality while missing the precise clinical detail. These failures point to gaps in visual–textual grounding and domain understanding — gaps that LoRA fine-tuning noticeably, but not fully, narrows.
+
 <Figure>
   <Picture slot="figure" src="../../public/images/acl-error-analysis.pdf" alt="Error Analysis" />
-  <Fragment slot="caption">Qualitative error analysis of LVLM responses.</Fragment>
+  <Fragment slot="caption">Qualitative error analysis of LVLM responses, showing aligned English–Bangla questions and clinically validated answers across condition and abnormality-localization categories.</Fragment>
 </Figure>
+
+## Conclusion
+
+We present the first Medical Visual Question Answering benchmark for Bangla, addressing a significant gap in low-resource, multimodal evaluation. Across a systematic study of nine open- and closed-source LVLMs, top models such as Gemini, GPT-4.1 Mini, and Claude Sonnet 4 perform reasonably on general questions but fail on specialized diagnostic tasks. LoRA fine-tuning delivers substantial gains — enabling open-source models like Qwen2.5-VL and Med-Gemma 4B to surpass closed-source baselines — yet performance on the Condition and Position categories remains limited, showing that current VLMs still lack fine-grained medical reasoning. **BanglaMedVQA** offers a clinically validated foundation to drive future progress.
+
+> **Intended use.** Models trained on this dataset are for research only and must not be used for clinical decision-making. All images and annotations come from publicly available sources with no personally identifiable information.
 
 ## BibTeX citation
 

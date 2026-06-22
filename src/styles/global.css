@@ -59,6 +59,23 @@ main .katex-display {
   margin-left: 2rem;
 }
 
+/* Section heading accent line */
+main h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-zinc-200);
+}
+
+[data-theme="dark"] main h2,
+[data-theme="device"] main h2 {
+  border-bottom-color: color-mix(in srgb, var(--color-zinc-50) 12%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="device"] main h2 {
+    border-bottom-color: color-mix(in srgb, var(--color-zinc-50) 12%, transparent);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

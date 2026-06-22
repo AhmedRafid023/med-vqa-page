@@ -16,22 +16,24 @@
     </div>
   </div>
   
-  <div class="flex flex-col xl:flex-row gap-6 w-full items-center justify-center">
-    <div class="flex-1 w-full flex flex-col items-center">
-      <div class="relative w-full h-[450px]"><canvas id="radarZeroShot"></canvas></div>
-      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(a) Zero-Shot Prompt</span>
-    </div>
-    <div class="flex-1 w-full flex flex-col items-center">
-      <div class="relative w-full h-[450px]"><canvas id="radarCoT"></canvas></div>
-      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(b) CoT Prompt</span>
-    </div>
-    <div class="flex-1 w-full flex flex-col items-center">
-      <div class="relative w-full h-[450px]"><canvas id="radarLoRA"></canvas></div>
-      <span class="text-sm mt-3 font-bold text-zinc-700 dark:text-zinc-300">(c) LoRA Fine-Tuning</span>
-    </div>
+  <div id="radar-legend" class="mb-7 flex flex-wrap justify-center gap-x-4 gap-y-2.5"></div>
+
+  <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+    <figure class="m-0 rounded-xl border border-zinc-200 bg-zinc-50/60 p-4 dark:border-zinc-700 dark:bg-zinc-800/40">
+      <div class="relative h-[300px] w-full"><canvas id="radarZeroShot"></canvas></div>
+      <figcaption class="mt-3 text-center text-sm font-semibold text-zinc-700 dark:text-zinc-300">(a) Zero-Shot Prompt</figcaption>
+    </figure>
+    <figure class="m-0 rounded-xl border border-zinc-200 bg-zinc-50/60 p-4 dark:border-zinc-700 dark:bg-zinc-800/40">
+      <div class="relative h-[300px] w-full"><canvas id="radarCoT"></canvas></div>
+      <figcaption class="mt-3 text-center text-sm font-semibold text-zinc-700 dark:text-zinc-300">(b) CoT Prompt</figcaption>
+    </figure>
+    <figure class="m-0 rounded-xl border border-zinc-200 bg-zinc-50/60 p-4 dark:border-zinc-700 dark:bg-zinc-800/40">
+      <div class="relative h-[300px] w-full"><canvas id="radarLoRA"></canvas></div>
+      <figcaption class="mt-3 text-center text-sm font-semibold text-zinc-700 dark:text-zinc-300">(c) LoRA Fine-Tuning</figcaption>
+    </figure>
   </div>
-  <p class="text-xs text-center mt-6 text-zinc-500 dark:text-zinc-400 italic px-4">
-    *Toggle the model labels above each chart to isolate specific backbones across the Modality, Organ, Abnormality, Condition, and Positional axes.
+  <p class="mt-6 px-4 text-center text-xs text-zinc-500 dark:text-zinc-400 italic">
+    Click a model in the legend to toggle it across all three charts. Axes show LAVE scores on the Modality, Organ, Abnormality, Condition, and Position categories. LoRA fine-tuning is applied to open-source models only.
   </p>
 </div>
 
@@ -127,7 +129,7 @@
     };
 
     const buildDatasets = (dataSubset) => {
-      return Object.keys(dataSubset).map((model, index) => {
+      return Object.keys(dataSubset).map((model) => {
         const color = modelColors[model] || "rgba(100, 100, 100";
         return {
           label: model,
@@ -148,7 +150,7 @@
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: colors.textColor, font: { family: 'inherit', size: 10 }, usePointStyle: true }, position: 'top' },
+        legend: { display: false },
         tooltip: { bodyFont: { family: 'inherit' }, titleFont: { family: 'inherit' } }
       },
       scales: {
@@ -184,13 +186,43 @@
 
     const charts = [chartZeroShot, chartCoT, chartLoRA];
 
+    // Shared interactive legend across all three charts
+    const hiddenModels = new Set();
+    const legendContainer = document.getElementById('radar-legend');
+
+    const applyVisibility = () => {
+      charts.forEach(chart => {
+        chart.data.datasets.forEach(ds => { ds.hidden = hiddenModels.has(ds.label); });
+        chart.update();
+      });
+    };
+
+    const renderLegend = () => {
+      legendContainer.innerHTML = '';
+      Object.keys(modelColors).forEach(model => {
+        const isHidden = hiddenModels.has(model);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'inline-flex items-center gap-1.5 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-opacity ' + (isHidden ? 'opacity-30' : 'opacity-100 hover:opacity-70');
+        btn.innerHTML = `<span class="inline-block h-2.5 w-2.5 rounded-full" style="background:${modelColors[model]}, 1)"></span><span class="${isHidden ? 'line-through' : ''}">${model}</span>`;
+        btn.addEventListener('click', () => {
+          if (hiddenModels.has(model)) hiddenModels.delete(model); else hiddenModels.add(model);
+          applyVisibility();
+          renderLegend();
+        });
+        legendContainer.appendChild(btn);
+      });
+    };
+
+    renderLegend();
+
     // Listen to Dataset generic dropdown toggler
     document.getElementById('radar-dataset-selector').addEventListener('change', (e) => {
       const db = e.target.value === 'bangla' ? radarData.bangla : radarData.english;
       chartZeroShot.data.datasets = buildDatasets(db.zeroShot);
       chartCoT.data.datasets = buildDatasets(db.cot);
       chartLoRA.data.datasets = buildDatasets(db.lora);
-      charts.forEach(c => c.update());
+      applyVisibility();
     });
 
     // Dark Mode Observer Listener
